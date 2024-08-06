@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       String   @id @default(uuid())
+  username String @unique
+  email    String   @unique
+  first_name String
+  last_name String
+  password String
+  // You can add more fields as needed
+  reviews  Review[]
+}
+
+// Model representing an item that can be reviewed
+model Item {
+  id       String   @id @default(uuid())
+  name     String
+  type     String   // e.g., "store", "restaurant", "product", etc.
+  reviews  Review[]
+  averageRating Float @default(0)
+}
+
+// Model for reviews
+model Review {
+  id       String   @id @default(uuid())
+  rating   Int      // rating from 1 to 5 or another scale
+  comment  String?
+  userId   String
+  itemId   String
+  user     User    @relation(fields: [userId], references: [id])
+  item     Item    @relation(fields: [itemId], references: [id])
+}
