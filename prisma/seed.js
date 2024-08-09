@@ -25,6 +25,19 @@ const main = async () => {
   console.log('created users:', users);
 
   // seed stores 
+console.log("Creating stores");
+await Promise.all([user1,user2].map((user)=> {
+  [...Array(3)].map(()=>{
+    return prisma.stores.create({
+      data:{
+        species,
+        img_url: '',
+        user_id: user.id
+      }
+    })
+  })
+}))
+
 
   
 };

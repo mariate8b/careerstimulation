@@ -21,11 +21,9 @@ model User {
   first_name String
   last_name String
   password String
-  // You can add more fields as needed
   reviews  Review[]
 }
 
-// Model representing an item that can be reviewed
 model Item {
   id       String   @id @default(uuid())
   name     String
@@ -34,7 +32,7 @@ model Item {
   averageRating Float @default(0)
 }
 
-// Model for reviews
+
 model Review {
   id       String   @id @default(uuid())
   rating   Int      // rating from 1 to 5 or another scale
